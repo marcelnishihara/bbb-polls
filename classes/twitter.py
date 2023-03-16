@@ -22,6 +22,12 @@ class Twitter:
     def __compose_msg(self, housemates_number:int, counter_limit: int) -> None:
         '''Method __compose_msg
         '''
+        housemates_number_msg = (
+            '_Twitter__compose_msg(), housemates_number parameter value is '
+            f'{housemates_number}')
+
+        print(housemates_number_msg)
+
         self.msg = (
             'A @Splash_UOL está com as seguintes parciais para a Enquete do #B'
             f'BB23 "{self.data["question"]}"\n\n')
@@ -39,14 +45,6 @@ class Twitter:
                 f'{housemate_partial}%\n')
 
             counter += 1
-
-        if self.data['source_web_page'] == 'splash_filler' and \
-            housemates_number > 3:
-            other_housemates = format((100 - firsts_housemates_sum), '.2f')
-            other_housemates = str(other_housemates).replace('.', ',')
-            self.msg += f'O restante soma {other_housemates}%\n'
-
-        self.msg += f'\nTotal de Votos: {self.data["total"]}\n'
 
         if self.data['source_web_page'] == 'splash':
             self.msg += (

@@ -1,19 +1,29 @@
-'''
-Module Docstring
-'''
+"""Module for the ``main(flask.Request)`` function
+"""
 
 import json
 import traceback
 
+from werkzeug.datastructures import Headers
 from classes.big_brother_brasil import BigBrotherBrasil
 from classes.helpers import Helpers
 from classes.sources import Sources
 
 
-def main(request):
-    '''
-    Function Docstring
-    '''
+def main(request: Headers):
+    """``Project bbb-23-enquetes``
+
+    Twitter bot built to report the partial voting pools results of the 
+    Brazil edition of the reality-show Big Brother (Season 23).
+
+    Args:
+        request (flask.Request): The request object used by default in 
+        Flask.
+
+    Returns:
+        tuple: HTTP status code and the data extracted or an error 
+        message.
+    """
     try:
         call_headers = Helpers.is_valid_call(headers_list=request.headers)
 
@@ -43,8 +53,14 @@ def main(request):
             return (json.dumps(obj=bbb.list_to_log), 200)
 
         else:
-            msg = 'Unauthorized'
-            print(f'{msg}: Invalid Call')
+            msg = (
+                'Unauthorized. '
+                'Request boolean value for "is_source_web_page_valid" was '
+                f'"{call_headers["is_source_web_page_valid"]}", and the '
+                'boolean value for "is_uuid_valid" was '
+                f'"{call_headers["is_uuid_valid"]}"')
+
+            print(f'{msg}')
             return (msg, 401)
 
     except Exception:

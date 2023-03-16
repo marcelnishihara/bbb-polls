@@ -5,6 +5,7 @@ Module tests
 import json
 import requests
 
+
 LOCALHOST = ''
 
 response = requests.get(
