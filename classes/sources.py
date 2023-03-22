@@ -20,7 +20,7 @@ class Sources:
         self.__poll = poll
         self.__sources_json_file_path = sources_json_file_path
 
-        self.__sources = { 'splash': 0 }
+        self.__sources = { 'splash': 0, 'splash_append': 1 }
         self.__sources_json_file_content = []
 
         self.url = ''

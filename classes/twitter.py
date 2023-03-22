@@ -50,6 +50,12 @@ class Twitter:
             self.msg += (
                 f'{self.data["poll_number"]}º paredão do '
                 'Big Brother Brasil 23\n')
+        elif self.data['source_web_page'] == 'splash_append':
+            other_housemates = format((100 - firsts_housemates_sum), '.2f')
+            other_housemates = str(other_housemates).replace('.', ',')
+            self.msg += f'Os demais somam {other_housemates}%\n'
+
+        self.msg += f'\nTotal de Votos: {self.data["total"]}\n'
 
         now = self.data['now']['today']
 

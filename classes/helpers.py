@@ -91,7 +91,9 @@ class Helpers:
 
         project_uuid = os.environ['PROJECT_UUID']
         is_uuid_valid = headers['Projectuuid'] == project_uuid
-        is_source_web_page_valid = headers['Sourcewebpage'] == 'splash'
+        is_source_web_page_valid = headers['Sourcewebpage'] == 'splash' or \
+            headers['Sourcewebpage'] == 'splash_append'
+
         is_valid_call = is_uuid_valid and is_source_web_page_valid
         headers['is_valid_call'] = True if is_valid_call else False
         headers['is_uuid_valid'] = is_uuid_valid
