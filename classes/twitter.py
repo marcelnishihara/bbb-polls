@@ -48,8 +48,8 @@ class Twitter:
 
         if self.data['source_web_page'] == 'splash':
             self.msg += (
-                f'{self.data["poll_number"]}º paredão do '
-                'Big Brother Brasil 23\n')
+                f'\n{self.data["poll_number"]}º paredão do '
+                'Big Brother Brasil 23')
         elif self.data['source_web_page'] == 'splash_append':
             other_housemates = format((100 - firsts_housemates_sum), '.2f')
             other_housemates = str(other_housemates).replace('.', ',')
