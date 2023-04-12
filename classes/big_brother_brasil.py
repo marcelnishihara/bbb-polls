@@ -35,10 +35,6 @@ class BigBrotherBrasil:
         regexp = self.__compose_regexp(
             housemates_number=self.housemates_number)
 
-        question = re.findall(
-            pattern=regexp['data']['question'],
-            string=get_uol_page_data.text)[0].strip()
-
         class_partial_result = re.findall(
             pattern=regexp['data']['partial_result_div'],
             string=get_uol_page_data.text)[0]
@@ -71,7 +67,6 @@ class BigBrotherBrasil:
             'url': self.url,
             'source_web_page': self.source_web_page,
             'poll_number': self.poll_number,
-            'question': question,
             'partial_result': self.partial_result,
             'total': total})
 
