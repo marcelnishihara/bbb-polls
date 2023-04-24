@@ -30,7 +30,7 @@ class Twitter:
 
         self.msg = (
             'A @Splash_UOL está com as seguintes parciais para a Enquete do #B'
-            'BB23 "Quem você quer eliminar no Paredão?"\n\n')
+            'BB23 "Quem você quer que vença?"\n\n')
 
         counter = 0
         firsts_housemates_sum = 0
@@ -48,7 +48,7 @@ class Twitter:
 
         if self.data['source_web_page'] == 'splash':
             self.msg += (
-                f'\n{self.data["poll_number"]}º paredão do '
+                f'\n{self.data["poll_number"]}ª votação do '
                 'Big Brother Brasil 23')
         elif self.data['source_web_page'] == 'splash_append':
             other_housemates = format((100 - firsts_housemates_sum), '.2f')
