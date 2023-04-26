@@ -30,7 +30,7 @@ class Twitter:
 
         self.msg = (
             'A @Splash_UOL está com as seguintes parciais para a Enquete do '
-            '#finalbbb23 "Quem você quer que vença?"\n\n')
+            '#FinalBBB23 "Quem você quer que vença?"\n\n')
 
         counter = 0
         firsts_housemates_sum = 0
