@@ -29,8 +29,8 @@ class Twitter:
         print(housemates_number_msg)
 
         self.msg = (
-            'A @Splash_UOL está com as seguintes parciais para a Enquete do #B'
-            'BB23 "Quem você quer que vença?"\n\n')
+            'A @Splash_UOL está com as seguintes parciais para a Enquete do '
+            '#finalbbb23 "Quem você quer que vença?"\n\n')
 
         counter = 0
         firsts_housemates_sum = 0
@@ -47,7 +47,7 @@ class Twitter:
             counter += 1
 
         if self.data['source_web_page'] == 'splash':
-            self.msg += f'\nÚltima votação do Big Brother Brasil 23'
+            self.msg += f'\nÚltima votação do Big Brother Brasil 23'                
         elif self.data['source_web_page'] == 'splash_append':
             other_housemates = format((100 - firsts_housemates_sum), '.2f')
             other_housemates = str(other_housemates).replace('.', ',')
