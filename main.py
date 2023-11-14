@@ -11,7 +11,7 @@ from classes.sources import Sources
 
 
 def main(request: Headers):
-    """``Project bbb-23-enquetes``
+    """``Project BBB Polls``
 
     Twitter bot built to report the partial voting pools results of the 
     Brazil edition of the reality-show Big Brother (Season 23).

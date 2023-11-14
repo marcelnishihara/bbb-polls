@@ -1,6 +1,6 @@
-# bbb-23-enquetes
+# BBB Pools
 
-Este repositório contém o código-fonte de uma Cloud Function desenvolvida para a temporada 23 do reality show Big Brother Brasil (BBB). A Cloud Function é projetada para extrair dados parciais de enquetes promovidas pela [Splash, que pertence à UOL](https://www.uol.com.br/splash/) e publicá-los tweets na conta [@bbb_23_enquetes no Twitter](https://twitter.com/bbb_23_enquetes/).
+Este repositório contém o código-fonte de uma Cloud Function desenvolvida para a temporada 23 do reality show Big Brother Brasil (BBB). A Cloud Function é projetada para extrair dados parciais de enquetes promovidas pela [Splash, que pertence à UOL](https://www.uol.com.br/splash/) e publicá-los tweets na conta [@bbb_polls no Twitter](https://twitter.com/bbb_polls/).
 
 ## Sobre o Big Brother Brasil
 
@@ -10,7 +10,7 @@ O BBB é um dos reality shows mais populares do Brasil, e as enquetes relacionad
 
 - **Extração de Dados de Enquetes:** A Cloud Function faz uma requisição à página da enquete vigente na semana da Splash (UOL) para obter seus dados parciais.
 
-- **Publicação de Tweets:** Além de armazenar os dados, a função também publica tweets na conta [@bbb_23_enquetes no Twitter](https://twitter.com/bbb_23_enquetes/), compartilhando informações atualizadas sobre as enquetes.
+- **Publicação de Tweets:** Além de armazenar os dados, a função também publica tweets na conta [@bbb_polls no Twitter](https://twitter.com/bbb_polls/), compartilhando informações atualizadas sobre as enquetes.
 
 ## Rodando o bbb-23-enquetes Localmente
 
