@@ -1,7 +1,10 @@
-# FOLDER
-__pycache__
-env
+# FOLDERS
+env/
+__pycache__/
+log/
+tests/
 
 # FILES
-credentials/_creds.ps1
-sources/sources.json
+*.json
+*.html
+credentials/__credentials.sh

@@ -1,5 +1,5 @@
-'''
-'''
+"""Module for the Class Twitter
+"""
 
 import os
 import tweepy
@@ -9,9 +9,9 @@ class Twitter:
     '''Class Twitter
     '''
 
-    def __init__(self, data: list) -> None:
+    def __init__(self, data: dict) -> None:
         self.msg = ''
-        self.data = data[0]
+        self.data = data
         self.__client = tweepy.Client(
             consumer_key=os.environ['TWITTER_CONSUMER_KEY'],
             consumer_secret=os.environ['TWITTER_CONSUMER_SECRET'],
@@ -19,54 +19,70 @@ class Twitter:
             access_token_secret=os.environ['TWITTER_ACCESS_TOKEN_SECRET'])
 
 
-    def __compose_msg(self, housemates_number:int, counter_limit: int) -> None:
+    def __compose_msg(
+            self,
+            datetime: dict,
+            poll_number_of_players: int,
+            counter_limit: int = 3) -> None:
         '''Method __compose_msg
         '''
-        housemates_number_msg = (
-            '_Twitter__compose_msg(), housemates_number parameter value is '
-            f'{housemates_number}')
-
-        print(housemates_number_msg)
-
         self.msg = (
-            'A @Splash_UOL está com as seguintes parciais para a Enquete do '
-            '#FinalBBB23 "Quem você quer que vença?"\n\n')
+            f'#BBB24 Resultado Parcial da Enquete da @Splash_UOL: '
+            f'"{self.data["title"]}"\n\n')
 
+        firsts_three_percentage_sum = 0
         counter = 0
-        firsts_housemates_sum = 0
 
-        while counter < counter_limit:
-            housemate = self.data['partial_result'][counter]
-            housemate_partial = str(housemate["partial"]).replace('.', ',')
-            firsts_housemates_sum += housemate["partial"]
+        for player in self.data['players']:
+            player_percentage = format(player["percentage"], '.2f')
 
-            self.msg += (
-                f'{counter + 1}º {housemate["housemate"]}: '
-                f'{housemate_partial}%\n')
+            if counter < counter_limit:
+                self.msg += (
+                    f'{player["position"]}º '
+                    f'{player["name"]}: '
+                    f'{player_percentage.replace(".", ",")}%\n'
+                )
 
-            counter += 1
+                firsts_three_percentage_sum += player['percentage']
+                counter += 1
 
-        if self.data['source_web_page'] == 'splash':
-            self.msg += f'\nÚltima votação do Big Brother Brasil 23'                
-        elif self.data['source_web_page'] == 'splash_append':
-            other_housemates = format((100 - firsts_housemates_sum), '.2f')
-            other_housemates = str(other_housemates).replace('.', ',')
-            self.msg += f'Os demais somam {other_housemates}%\n'
+            else:
+                break
 
-        self.msg += f'\nTotal de Votos: {self.data["total"]}\n'
+        if poll_number_of_players > counter_limit:
+            rest = format(100-firsts_three_percentage_sum, '.2f')
+            self.msg += f'\nOs demais somam {rest.replace(".", ",")}%'
 
-        now = self.data['now']['today']
+        self.msg += f'\nTotal de Votos: {self.data["totalOfVotes"]}\n'
 
-        self.msg += ('\n🕒 '
-            f'{now[2]}/{now[1]}/{now[0]} às {now[3]}:{now[4]}:{now[5]}')
+        now = [
+            datetime["now"].day,
+            datetime["now"].month,
+            datetime["now"].year,
+            datetime["now"].hour,
+            datetime["now"].minute,
+            datetime["now"].second
+        ]
+
+        for index, value in enumerate(now):
+            now[index] = f'0{value}' if value < 10 else value
+
+        self.msg += (
+            f'🕒 {now[0]}/'
+            f'{now[1]}/'
+            f'{now[2]} às '
+            f'{now[3]}:'
+            f'{now[4]}:'
+            f'{now[5]}')
 
 
-    def post(self, housemates_number: int, counter_limit: int) -> dict:
+    def post(self, datetime: dict, counter_limit: int = 3) -> dict:
         '''Method post
         '''
         self.__compose_msg(
-            housemates_number=housemates_number,
-            counter_limit=counter_limit)
+            counter_limit=counter_limit,
+            poll_number_of_players=len(self.data['players']),
+            datetime=datetime)
 
         response = self.__client.create_tweet(text=self.msg)
         return response.data
