@@ -1,106 +1,56 @@
-'''
-'''
+"""Module for the Class Helpers
+"""
 
-import json
-import os
+import pytz
 
 from datetime import datetime
-from pytz import timezone
 
 
 class Helpers:
-    '''Class Helpers
-    '''
+    def __init__(self) -> None:
+        pass
+
 
     @staticmethod
-    def get_datetime() -> None:
-        '''Static get_datetime
-        '''
-        date = datetime.now(tz=timezone(zone='Brazil/East'))
-
-        today = [
-            date.year,
-            date.month,
-            date.day,
-            date.hour,
-            date.minute,
-            date.second
-        ]
-
-        for index, value in enumerate(today):
-            today[index] = f'0{value}' if value < 10 else value
-
-        datetime_formatted = (
-            f'{today[0]}_{today[1]}_{today[2]}_'
-            f'{today[3]}h{today[4]}min{today[5]}s')
-
+    def datetime() -> dict:
+        """Static Method datetime
+        """
+        today_is = datetime.now(tz=pytz.timezone(zone='America/Sao_Paulo'))
+        iso_format = today_is.isoformat()
+        formatted = (
+            iso_format
+            .replace('-03:00', '')
+            .replace('-', '_')
+            .replace('T', '_')
+            .replace(':', '_')
+            .replace('.', '_'))
+        
         return {
-            'datetime': datetime_formatted,
-            'today': today
+            'now': today_is,
+            'formatted': formatted
         }
 
 
     @staticmethod
-    def read_file(
-        path,
-        enconding: str = 'utf-8',
-        is_json: bool = True,
-        ) -> dict:
-        '''Static method read_file
-        '''
-        file_opened = open(
-            file=path,
-            mode='r',
-            encoding=enconding)
+    def log(
+        string_to_log: str,
+        file_path: str = './',
+        prefix: str = 'log',
+        extension: str = 'json'
+        ) -> None:
+        """Static Method log
+        """
 
-        read_data = file_opened.read()
-        data = json.loads(s=read_data) if is_json else read_data
-        return { 'success': True, 'path': path, 'data': data }
+        if file_path.endswith('/'):
+            now = Helpers.datetime()['formatted']
+            prefix = prefix.lower().replace(' ', '_')
+            file_name = f'{file_path}{prefix}_{now}.{extension}'
 
+            with open(file=file_name, mode='w', encoding='utf-8') as log_file: 
+                log_file.write(string_to_log)
+                log_file.close()
+            
+            print(f'Log file "{file_name}" Created!')
 
-    @staticmethod
-    def create_headers_dict(headers_list: list) -> dict:
-        '''Static method create_headers_dict
-        '''
-        headers_dict = {}
-
-        for header in headers_list:
-            key = header[0]
-            value = header[1]
-
-            if key == 'Tweet':
-                headers_dict[key] = bool(int(value))
-            elif key == 'Pollindex' or key == 'Housematesnumber' \
-                or key == 'Counterlimit':
-                headers_dict[key] = int(value)
-            else:
-                headers_dict[key] = value
-
-        if headers_dict['Counterlimit'] == 0:
-            headers_dict['Counterlimit'] = headers_dict['Housematesnumber']
-
-        return headers_dict
-
-
-    @staticmethod
-    def is_valid_call(headers_list: list) -> dict:
-        '''Static method is_valid_call
-        '''
-        headers = Helpers.create_headers_dict(headers_list=headers_list)
-        headers['is_valid_call'] = False
-
-        project_uuid = os.environ['PROJECT_UUID']
-        is_uuid_valid = headers['Projectuuid'] == project_uuid
-        is_source_web_page_valid = headers['Sourcewebpage'] == 'splash' or \
-            headers['Sourcewebpage'] == 'splash_append'
-
-        is_valid_call = is_uuid_valid and is_source_web_page_valid
-        headers['is_valid_call'] = True if is_valid_call else False
-        headers['is_uuid_valid'] = is_uuid_valid
-        headers['is_source_web_page_valid'] = is_source_web_page_valid
-
-        headers['Projectuuid'] = (
-            f'{headers["Projectuuid"][0:4]}***{headers["Projectuuid"][-4:]}')
-
-        print(f'Call Headers: {json.dumps(headers)}')
-        return headers
+        else:
+            raise ValueError('Missing dash character')

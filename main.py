@@ -1,69 +1,34 @@
-"""Module for the ``main(flask.Request)`` function
-"""
+from classes.splash_uol import SplashUOL
+from classes.helpers import Helpers
+from classes.twitter import Twitter
 
 import json
-import traceback
-
-from werkzeug.datastructures import Headers
-from classes.big_brother_brasil import BigBrotherBrasil
-from classes.helpers import Helpers
-from classes.sources import Sources
 
 
-def main(request: Headers):
-    """``Project BBB Polls``
-
-    Twitter bot built to report the partial voting pools results of the 
-    Brazil edition of the reality-show Big Brother (Season 23).
-
-    Args:
-        request (flask.Request): The request object used by default in 
-        Flask.
-
-    Returns:
-        tuple: HTTP status code and the data extracted or an error 
-        message.
+def main(request) -> tuple:
+    """Function main
     """
-    try:
-        call_headers = Helpers.is_valid_call(headers_list=request.headers)
+    datetime_formatted = Helpers.datetime()
 
-        if call_headers['is_valid_call']:
-            print(f'Valid Call: {call_headers["is_valid_call"]}')
+    splash_uol = SplashUOL(poll_path=request.headers['Poll-Endpoint'])
+    splash_uol.run()
+    poll_data = splash_uol.get_poll_data()
 
-            sources = Sources(
-                source_web_page=call_headers["Sourcewebpage"],
-                poll=call_headers['Pollindex'],
-                sources_json_file_path=call_headers['Sourcesjsonfile'])
+    twitter_session = Twitter(poll_data)
+    tweet_data = twitter_session.post(datetime=datetime_formatted)
 
-            sources.compose_url()
+    poll_data = json.dumps(obj=poll_data, indent=4)
 
-            bbb = BigBrotherBrasil(
-                url=sources.url,
-                source_web_page=call_headers["Sourcewebpage"],
-                poll_number=call_headers['Pollindex'],
-                housemates_number=call_headers['Housematesnumber'])
+    Helpers.log(
+        string_to_log=json.dumps(obj=tweet_data, indent=4),
+        file_path='./log/',
+        prefix='log_tweet_data'
+    )
 
-            bbb.extract_and_transform_data()
+    Helpers.log(
+        string_to_log=json.dumps(obj=poll_data, indent=4),
+        file_path='./log/',
+        prefix='log_poll'
+    )
 
-            if call_headers['Tweet']:
-                bbb.create_tweet(
-                    housemates_number = call_headers['Housematesnumber'],
-                    counter_limit = call_headers["Counterlimit"])
-
-            return (json.dumps(obj=bbb.list_to_log), 200)
-
-        else:
-            msg = (
-                'Unauthorized. '
-                'Request boolean value for "is_source_web_page_valid" was '
-                f'"{call_headers["is_source_web_page_valid"]}", and the '
-                'boolean value for "is_uuid_valid" was '
-                f'"{call_headers["is_uuid_valid"]}"')
-
-            print(f'{msg}')
-            return (msg, 401)
-
-    except Exception:
-        err = traceback.format_exc().replace('\n', ' ')
-        print(f'Error: {err}')
-        return ('Internal Server Error', 500)
+    return (poll_data, 200)
