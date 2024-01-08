@@ -2,7 +2,6 @@
 env/
 __pycache__/
 log/
-tests/
 
 # FILES
 *.json
