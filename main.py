@@ -14,10 +14,14 @@ def main(request) -> tuple:
     splash_uol.run()
     poll_data = splash_uol.get_poll_data()
 
+    Helpers.log(
+        string_to_log=json.dumps(obj=poll_data, indent=4),
+        file_path='./log/',
+        prefix='log_poll'
+    )
+
     twitter_session = Twitter(poll_data)
     tweet_data = twitter_session.post(datetime=datetime_formatted)
-
-    poll_data = json.dumps(obj=poll_data, indent=4)
 
     Helpers.log(
         string_to_log=json.dumps(obj=tweet_data, indent=4),
@@ -25,10 +29,4 @@ def main(request) -> tuple:
         prefix='log_tweet_data'
     )
 
-    Helpers.log(
-        string_to_log=json.dumps(obj=poll_data, indent=4),
-        file_path='./log/',
-        prefix='log_poll'
-    )
-
-    return (poll_data, 200)
+    return ('OK', 200)
