@@ -20,13 +20,16 @@ def main(request) -> tuple:
         prefix='log_poll'
     )
 
-    twitter_session = Twitter(poll_data)
-    tweet_data = twitter_session.post(datetime=datetime_formatted)
+    tweet = int(request.headers['tweet'])
 
-    Helpers.log(
-        string_to_log=json.dumps(obj=tweet_data, indent=4),
-        file_path='./log/',
-        prefix='log_tweet_data'
-    )
+    if tweet%2 == 0:
+        twitter_session = Twitter(poll_data)
+        tweet_data = twitter_session.post(datetime=datetime_formatted)
+
+        Helpers.log(
+            string_to_log=json.dumps(obj=tweet_data, indent=4),
+            file_path='./log/',
+            prefix='log_tweet_data'
+        )
 
     return ('OK', 200)

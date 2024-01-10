@@ -25,7 +25,7 @@ POLLS = [
 ]
 
 COUNTER = 0
-TWEET = 0
+TWEET = 1
 
 while True:
     COUNTER += 1
@@ -52,7 +52,6 @@ while True:
             f'Status Code: {RESPONSE.status_code}\n'
             f'Tweet: {TWEET}\n')
 
-        print(request_msg)        
-
-    TWEET += 1
-    sleep(3600)
+        print(request_msg)
+    
+    sleep(300)
