@@ -1,7 +1,6 @@
 """Module for the Class Twitter
 """
 
-import json
 import os
 import tweepy
 
@@ -28,7 +27,7 @@ class Twitter:
         '''Method __compose_msg
         '''
         self.msg = (
-            f'#BBB24 Resultado parcial da enquete da @Splash_UOL: '
+            f'#BBB24 Parcial da enquete da @Splash_UOL BBB 24: '
             f'"{self.data["title"]}"\n\n')
 
         firsts_three_percentage_sum = 0
@@ -54,7 +53,8 @@ class Twitter:
             rest = format(100-firsts_three_percentage_sum, '.2f')
             self.msg += f'\nOs demais somam {rest.replace(".", ",")}%'
 
-        self.msg += f'\nTotal de Votos: {self.data["totalOfVotes"]}\n'
+        self.msg += (
+            f'\nTotal de Votos: {self.data["totalOfVotes"]}\n')
 
         now = [
             datetime["now"].day,
