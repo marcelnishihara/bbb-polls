@@ -33,6 +33,7 @@ class Helpers:
 
     @staticmethod
     def log(
+        today_is: str,
         string_to_log: str,
         file_path: str = './',
         prefix: str = 'log',
@@ -42,14 +43,13 @@ class Helpers:
         """
 
         if file_path.endswith('/'):
-            now = Helpers.datetime()['formatted']
             prefix = prefix.lower().replace(' ', '_')
-            file_name = f'{file_path}{prefix}_{now}.{extension}'
+            file_name = f'{file_path}{prefix}_{today_is}.{extension}'
 
             with open(file=file_name, mode='w', encoding='utf-8') as log_file: 
                 log_file.write(string_to_log)
                 log_file.close()
-            
+
             print(f'Log file "{file_name}" Created!')
 
         else:

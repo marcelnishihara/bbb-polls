@@ -21,13 +21,13 @@ class Twitter:
 
     def __compose_msg(
             self,
-            datetime: dict,
+            today_is: dict,
             poll_number_of_players: int,
             counter_limit: int = 3) -> None:
         '''Method __compose_msg
         '''
         self.msg = (
-            f'#BBB24 Parcial da enquete da @Splash_UOL BBB 24: '
+            f'#BBB24 Parcial da enquete @Splash_UOL BBB 24: '
             f'"{self.data["title"]}"\n\n')
 
         firsts_three_percentage_sum = 0
@@ -57,12 +57,12 @@ class Twitter:
             f'\nTotal de Votos: {self.data["totalOfVotes"]}\n')
 
         now = [
-            datetime["now"].day,
-            datetime["now"].month,
-            datetime["now"].year,
-            datetime["now"].hour,
-            datetime["now"].minute,
-            datetime["now"].second
+            today_is['now'].day,
+            today_is['now'].month,
+            today_is['now'].year,
+            today_is['now'].hour,
+            today_is['now'].minute,
+            today_is['now'].second
         ]
 
         for index, value in enumerate(now):
@@ -77,13 +77,13 @@ class Twitter:
             f'{now[5]}')
 
 
-    def post(self, datetime: dict, counter_limit: int = 3) -> dict:
+    def post(self, today_is: dict, counter_limit: int = 3) -> dict:
         '''Method post
         '''
         self.__compose_msg(
             counter_limit=counter_limit,
             poll_number_of_players=len(self.data['players']),
-            datetime=datetime)
+            today_is=today_is)
 
         response = self.__client.create_tweet(text=self.msg)
         return response.data

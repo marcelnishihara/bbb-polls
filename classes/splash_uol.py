@@ -9,23 +9,14 @@ import traceback
 
 
 class SplashUOL:
-    def __init__(self, poll_path: str) -> None:
+    def __init__(self, today_is: str, poll_path: str) -> None:
         """Class SplashUOL
         """
+        self.__today_is = today_is
         self.__poll_url_prefix = 'https://www.uol.com.br/splash/bbb/enquetes'
-        self.__poll_url = ''
+        self.__poll_url = f'{self.__poll_url_prefix}{poll_path}'
         self.__poll_page_html_code = ''
         self.__poll_data = {}
-
-        if poll_path.startswith('/'):
-            self.__poll_url = f'{self.__poll_url_prefix}{poll_path}'
-        else:
-            poll_url_does_not_start_with_dash_err = (
-                'Class SplashUol Constructor: '
-                'Missing dash character in the string passed '
-                f'as poll_url parameter value: {poll_path}')
-
-            raise ValueError(poll_url_does_not_start_with_dash_err)
 
 
     def get_poll_page_html_code(self) -> str:
@@ -59,7 +50,7 @@ class SplashUOL:
         """
         poll_html_code_to_json = html_to_json.convert(
             html_string=self.__poll_page_html_code)
-        
+
         poll_data_root = (
             poll_html_code_to_json
             ['html']
@@ -69,7 +60,7 @@ class SplashUOL:
             ['script']
             [0]
             ['_value'])
-        
+
         initial_state_is_valid = re.search(
             pattern='window\.__INITIAL_STATE__=(.*)(\;\(function\(\).*)',
             string=poll_data_root)
@@ -83,7 +74,8 @@ class SplashUOL:
                 pattern='(.*)\:(.*)',
                 string=poll_dict['title'].strip()).group(2)
 
-            self.__poll_data = { 
+            self.__poll_data = {
+                'todayIs': self.__today_is,
                 'title': poll_title.strip(),
                 'totalOfVotes':  poll_dict['votes'],
                 'players': []
