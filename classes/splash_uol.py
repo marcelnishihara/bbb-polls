@@ -76,6 +76,7 @@ class SplashUOL:
 
             self.__poll_data = {
                 'todayIs': self.__today_is,
+                'url': self.__poll_url,
                 'title': poll_title.strip(),
                 'totalOfVotes':  poll_dict['votes'],
                 'players': []

@@ -21,6 +21,18 @@ if __name__ == '__main__':
         ],
         [
             '/2024/01/09/bbb-24---enquete-uol-quem-voce-quer-fique-maycon-giovanna-ou-yasmin-brunet.htm'
+        ],
+        [
+            '/2024/01/11/bbb-24---enquete-uol-quem-o-segundo-lider-vai-indicar-ao-paredao.htm',
+        ],
+        [
+            '/2024/01/12/bbb-24---enquete-uol-quem-voce-quer-que-fique-na-casa.htm',
+        ],
+        [
+            '/2024/01/15/bbb-24---enquete-uol-quem-voce-quer-que-fique-na-casa.htm'
+        ],
+        [
+            '/2024/01/19/bbb-24---enquete-uol-quem-voce-quer-que-fique-na-casa-beatriz-davi-ou-pizane.htm'
         ]
     ]
 
@@ -29,12 +41,12 @@ if __name__ == '__main__':
     while True:
         create_tweet = False
 
-        if counter in (8, 16, 24, 32, 40, 48) or counter%60 == 0:
+        if counter % 10 == 0:
             create_tweet = True
 
         print(f'Counter: {counter}. Tweet parameter value is now {create_tweet}')
 
-        for poll_endpoint in polls[2]:
+        for poll_endpoint in polls[6]:
             client_uuid = RequestAnalysis.create_session_uuid_for_tests()
 
             headers = {
@@ -55,8 +67,7 @@ if __name__ == '__main__':
                 f'Text: {response.text}')
 
             print(response_msg)
+            sleep(1)
 
-            sleep(0.5)
-
-        sleep(120)
+        sleep(119)
         counter += 1
