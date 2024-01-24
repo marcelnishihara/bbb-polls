@@ -33,6 +33,9 @@ if __name__ == '__main__':
         ],
         [
             '/2024/01/19/bbb-24---enquete-uol-quem-voce-quer-que-fique-na-casa-beatriz-davi-ou-pizane.htm'
+        ],
+        [
+            '/2024/01/22/bbb-24---enquete-uol-quem-voce-quer-que-fique-na-casa.htm'
         ]
     ]
 
@@ -46,7 +49,7 @@ if __name__ == '__main__':
 
         print(f'Counter: {counter}. Tweet parameter value is now {create_tweet}')
 
-        for poll_endpoint in polls[6]:
+        for poll_endpoint in polls[7]:
             client_uuid = RequestAnalysis.create_session_uuid_for_tests()
 
             headers = {

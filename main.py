@@ -35,7 +35,9 @@ def main(request) -> tuple:
 
         if create_tweet:
             twitter_session = Twitter(poll_data)
-            tweet_data = twitter_session.post(today_is=today_is)
+            tweet_data = twitter_session.post(
+                today_is=today_is,
+                counter_limit=5)
 
             Helpers.log(
                 today_is=today_is['formatted'],
@@ -63,4 +65,4 @@ def main(request) -> tuple:
             prefix='log_bad_request'
         )
 
-        return ('Bad Request', 400)
+        return (bad_request_json, 400)
