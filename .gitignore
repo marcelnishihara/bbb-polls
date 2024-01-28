@@ -7,3 +7,6 @@ log/
 *.json
 *.html
 credentials/__credentials.sh
+
+# EXCEPTIONS
+!polls.json
