@@ -15,12 +15,12 @@ if __name__ == '__main__':
         polls_file.close()
 
     counter = 0
-    current_poll = polls['paredao'][5]
+    current_poll = polls['paredao'][6]
 
     while True:
         create_tweet = False
 
-        if counter % 10 == 0:
+        if counter % 5 == 0:
             create_tweet = True
 
         print(f'Counter: {counter}. Create Tweet: {create_tweet}')

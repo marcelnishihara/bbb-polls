@@ -16,11 +16,15 @@ class SplashUOL:
         self.__poll_url_prefix = 'https://www.uol.com.br/splash/bbb/enquetes'
         self.__poll_url = f'{self.__poll_url_prefix}{poll_path}'
         self.__poll_page_html_code = ''
+        self.__poll_html_code_to_json = {}
         self.__poll_data = {}
 
 
-    def get_poll_page_html_code(self) -> str:
-        return self.__poll_page_html_code
+    def get_poll_page_html_code(self, as_json = False) -> str:
+        if as_json:
+            return self.__poll_html_code_to_json
+        else:
+            return self.__poll_page_html_code
 
 
     def get_poll_data(self) -> dict:
@@ -48,52 +52,39 @@ class SplashUOL:
     def __extract_poll_data(self) -> None:
         """Private Method __extract_poll_data
         """
-        poll_html_code_to_json = html_to_json.convert(
+        self.__poll_html_code_to_json = html_to_json.convert(
             html_string=self.__poll_page_html_code)
 
-        poll_data_root = (
-            poll_html_code_to_json
+        self.__poll_html_code_to_json = json.loads(s=(
+            self.__poll_html_code_to_json
             ['html']
             [0]
             ['body']
             [0]
             ['script']
-            [0]
-            ['_value'])
+            [7]
+            ['_value']))
 
-        initial_state_is_valid = re.search(
-            pattern='window\.__INITIAL_STATE__=(.*)(\;\(function\(\).*)',
-            string=poll_data_root)
+        self.__poll_data = {
+            'todayIs': self.__today_is,
+            'url': self.__poll_url,
+            'title': self.__poll_html_code_to_json['poll']['title'],
+            'totalOfVotes': self.__poll_html_code_to_json['poll']['votes'],
+            'players': []
+        }
 
-        if initial_state_is_valid:
-            poll_data_root = json.loads(s=initial_state_is_valid.group(1))
+        for player in self.__poll_html_code_to_json['poll']['result']:
+            player_percentage = (
+                player['vote']
+                .replace(',', '.')
+                .replace('%', ''))
 
-            poll_dict = poll_data_root['pinia']['poll']
-            
-            poll_title = re.search(
-                pattern='(.*)\:(.*)',
-                string=poll_dict['title'].strip()).group(2)
-
-            self.__poll_data = {
-                'todayIs': self.__today_is,
-                'url': self.__poll_url,
-                'title': poll_title.strip(),
-                'totalOfVotes':  poll_dict['votes'],
-                'players': []
-            }
-
-            for player in poll_dict['result']:
-                player_percentage = (
-                    player['vote']
-                    .replace(',', '.')
-                    .replace('%', ''))
-
-                self.__poll_data['players'].append({
-                    'position': player['position'],
-                    'id': player['id'],
-                    'name': player['label'],
-                    'percentage': float(player_percentage)
-                })
+            self.__poll_data['players'].append({
+                'position': player['position'],
+                'id': player['id'],
+                'name': player['label'],
+                'percentage': float(player_percentage)
+            })
 
 
     def run(self) -> None:

@@ -9,6 +9,7 @@ import json
 def main(request) -> tuple:
     """Function main
     """
+
     today_is = Helpers.datetime()
 
     is_valid_request, explanation = RequestAnalysis.is_valid_request(
