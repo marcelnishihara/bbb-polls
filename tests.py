@@ -20,7 +20,7 @@ if __name__ == '__main__':
     while True:
         create_tweet = False
 
-        if counter % 5 == 0:
+        if counter % 60 == 0:
             create_tweet = True
 
         print(f'Counter: {counter}. Create Tweet: {create_tweet}')

@@ -65,10 +65,14 @@ class SplashUOL:
             [7]
             ['_value']))
 
+        poll_title = re.search(
+                pattern='(.*)\:(.*)',
+                string=self.__poll_html_code_to_json['poll']['title'])
+
         self.__poll_data = {
             'todayIs': self.__today_is,
             'url': self.__poll_url,
-            'title': self.__poll_html_code_to_json['poll']['title'],
+            'title': poll_title.group(2).strip(),
             'totalOfVotes': self.__poll_html_code_to_json['poll']['votes'],
             'players': []
         }
