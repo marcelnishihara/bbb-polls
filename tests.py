@@ -9,22 +9,24 @@ import requests
 from time import sleep
 
 
-if __name__ == '__main__':
-    with open(file='./polls.json', mode='r', encoding='utf-8') as polls_file:
-        polls = json.loads(s=polls_file.read())
-        polls_file.close()
+class Test:
+    def __init__(self) -> None:
+        self.__poll_path = ''
 
-    counter = 0
-    current_poll = polls['paredao'][6]
 
-    while True:
-        create_tweet = False
+    def get_poll_path(
+            self, 
+            key: str, 
+            index: int, 
+            file = './polls.json') -> None:
+        with open(file=file, mode='r', encoding='utf-8') as polls_file:
+            polls = json.loads(s=polls_file.read())
+            polls_file.close()
+        
+        self.__poll_path = polls[key][index]
 
-        if counter % 60 == 0:
-            create_tweet = True
 
-        print(f'Counter: {counter}. Create Tweet: {create_tweet}')
-
+    def request(self, create_tweet = str) -> str:        
         client_uuid = RequestAnalysis.create_session_uuid_for_tests()
 
         response = requests.request(
@@ -32,16 +34,30 @@ if __name__ == '__main__':
             url='http://0.0.0.0:8080',
             timeout=10,
             headers={
-                'Endpoint': current_poll,
-                'Tweet': str(create_tweet),
+                'Endpoint': self.__poll_path,
+                'Tweet': create_tweet,
                 'Uuid': client_uuid
             }
         )
 
-        response_msg = (
+        return (
             f'Request Status Code: {response.status_code} | '
             f'Text: {response.text}')
 
-        print(response_msg)
+
+if __name__ == '__main__':
+    counter = 1
+
+    while True:
+        create_tweet = False
+
+        if counter % 120 == 0:
+            create_tweet = True
+        
+        test = Test()
+        test.get_poll_path(key='paredao', index=6)
+        test_response = test.request(create_tweet=str(create_tweet))
+
+        print(test_response)
         sleep(120)
         counter += 1
