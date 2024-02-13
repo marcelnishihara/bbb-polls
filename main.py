@@ -36,9 +36,7 @@ def main(request) -> tuple:
 
         if create_tweet:
             twitter_session = Twitter(poll_data)
-            tweet_data = twitter_session.post(
-                today_is=today_is,
-                counter_limit=5)
+            tweet_data = twitter_session.post(today_is=today_is)
 
             Helpers.log(
                 today_is=today_is['formatted'],

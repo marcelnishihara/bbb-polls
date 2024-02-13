@@ -46,18 +46,18 @@ class Test:
 
 
 if __name__ == '__main__':
-    counter = 1
+    counter = 0
 
     while True:
         create_tweet = False
 
-        if counter % 120 == 0:
+        if counter % 30 == 0:
             create_tweet = True
-        
+
         test = Test()
-        test.get_poll_path(key='paredao', index=6)
+        test.get_poll_path(key='paredao', index=7)
         test_response = test.request(create_tweet=str(create_tweet))
 
-        print(test_response)
+        print(f'Request Index {counter} | {test_response}')
         sleep(120)
         counter += 1
