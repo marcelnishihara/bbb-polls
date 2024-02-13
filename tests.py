@@ -26,11 +26,11 @@ class Test:
         self.__poll_path = polls[key][index]
 
 
-    def request(self, create_tweet = str) -> str:        
+    def request(self, create_tweet = str, method: str = 'GET') -> str:        
         client_uuid = RequestAnalysis.create_session_uuid_for_tests()
 
         response = requests.request(
-            method='GET',
+            method=method,
             url='http://0.0.0.0:8080',
             timeout=10,
             headers={
@@ -46,7 +46,7 @@ class Test:
 
 
 if __name__ == '__main__':
-    counter = 0
+    counter = 1
 
     while True:
         create_tweet = False
@@ -58,6 +58,11 @@ if __name__ == '__main__':
         test.get_poll_path(key='paredao', index=7)
         test_response = test.request(create_tweet=str(create_tweet))
 
-        print(f'Request Index {counter} | {test_response}')
+        msg = (
+            f'Create Tweet: {create_tweet} | '
+            f'{test_response} | '
+            f'Request Index {counter}')
+
+        print(msg)
         sleep(120)
         counter += 1

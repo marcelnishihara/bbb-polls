@@ -34,6 +34,8 @@ def main(request) -> tuple:
             bool_as_string=request.headers['Tweet']
         )
 
+        tuple_to_return = ('Poll Data Logged', 200)
+
         if create_tweet:
             twitter_session = Twitter(poll_data)
             tweet_data = twitter_session.post(today_is=today_is)
@@ -45,7 +47,9 @@ def main(request) -> tuple:
                 prefix='log_tweet_data'
             )
 
-        return ('OK', 200)
+            tuple_to_return = ('Tweet Created', 201)
+
+        return tuple_to_return
 
     else:
         bad_request_json = json.dumps(
