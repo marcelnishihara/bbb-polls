@@ -2,6 +2,7 @@
 """
 
 from classes.request_analysis import RequestAnalysis
+from classes.bets import Bets
 
 import json
 import requests
@@ -45,8 +46,14 @@ class Test:
             f'Text: {response.text}')
 
 
+    @staticmethod
+    def bets() -> dict:
+        bets = Bets()
+        bets.run()
+
+
 if __name__ == '__main__':
-    counter = 1
+    counter = 0
 
     while True:
         create_tweet = False
@@ -55,7 +62,7 @@ if __name__ == '__main__':
             create_tweet = True
 
         test = Test()
-        test.get_poll_path(key='paredao', index=7)
+        test.get_poll_path(key='paredao', index=8)
         test_response = test.request(create_tweet=str(create_tweet))
 
         msg = (
