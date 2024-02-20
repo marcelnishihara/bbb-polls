@@ -31,7 +31,15 @@
                 "/bbb-24-9th-eviction-65d35c2026cfeb0001da3d89"
             ]
         },
-        "bet365": null,
+        "bet365": {
+            "urlPrefix": "https://www.bet365.com/#/AC/B131/C20944746/D1",
+            "seasonWinner": [
+                "/E100109068/F2/"
+            ],
+            "paredao": [
+                "/E100597366/F2/"
+            ]
+        },
         "betano": null,
         "bodog": null,
         "betfair": null

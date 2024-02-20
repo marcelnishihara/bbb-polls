@@ -46,12 +46,6 @@ class Test:
             f'Text: {response.text}')
 
 
-    @staticmethod
-    def bets() -> dict:
-        bets = Bets()
-        bets.run()
-
-
 if __name__ == '__main__':
     counter = 0
 
