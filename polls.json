@@ -8,7 +8,8 @@
         "/2024/01/29/bbb-24---enquete-uol-quem-voce-quer-que-fique-no-sexto-paredao.htm",
         "/2024/02/05/bbb-24---enquete-uol-votacao-7-paredao.htm",
         "/2024/02/11/bbb-24---enquete-uol-quem-voce-quer-eliminar-no-paredao.htm",
-        "/2024/02/19/bbb-24---enquete-uol-quem-voce-quer-eliminar-no-paredao.htm"
+        "/2024/02/19/bbb-24---enquete-uol-quem-voce-quer-eliminar-no-paredao.htm",
+        "/2024/02/26/bbb-24---enquete-uol-quem-voce-quer-eliminar-no-paredao.htm"
     ],
     "misc": [
         "/2024/01/05/bbb-24---enquete-uol-ate-agora-qual-dos-participantes-anunciados-e-o-seu-preferido.htm",
@@ -20,28 +21,5 @@
         "/2024/02/02/bbb-24---enquete-uol-quem-voce-acha-que-a-lider-fernanda-vai-indicar.htm",
         "/2024/02/06/bbb-24---enquete-uol-apos-setima-eliminacao-quem-e-o-mais-odiado-da-casa.htm",
         "/2024/02/06/bbb-24---enquete-uol-quem-e-o-favorito-apos-setima-eliminacao.htm"
-    ],
-    "bets": {
-        "sportsbet": {
-            "urlPrefix": "https://sportsbet.io/pt/sports/event/big-brother-brazil/brazil/big-brother-brazil-2024",
-            "seasonWinner": [
-                "/big-brother-brazil-2024-659d4b63aafd2b0001df18b3"
-            ],
-            "paredao": [
-                "/bbb-24-9th-eviction-65d35c2026cfeb0001da3d89"
-            ]
-        },
-        "bet365": {
-            "urlPrefix": "https://www.bet365.com/#/AC/B131/C20944746/D1",
-            "seasonWinner": [
-                "/E100109068/F2/"
-            ],
-            "paredao": [
-                "/E100597366/F2/"
-            ]
-        },
-        "betano": null,
-        "bodog": null,
-        "betfair": null
-    }
+    ]
 }

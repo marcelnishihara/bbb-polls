@@ -2,12 +2,13 @@
 """
 
 from classes.request_analysis import RequestAnalysis
-from classes.bets import Bets
+from classes.helpers import Helpers
 
 import json
 import requests
 
 from time import sleep
+from traceback import format_exc
 
 
 class Test:
@@ -41,29 +42,54 @@ class Test:
             }
         )
 
-        return (
-            f'Request Status Code: {response.status_code} | '
-            f'Text: {response.text}')
+        if response.status_code in (200, 201):
+            return (
+                f'Request Status Code: {response.status_code} | '
+                f'Text: {response.text}')
+
+        else:
+            return (
+                f'Request Status Code: {response.status_code} | '
+                f'Error: {response.text}'
+            )
 
 
 if __name__ == '__main__':
-    counter = 0
+    counter = 1
+    today_is = Helpers.datetime()
 
     while True:
-        create_tweet = False
+        try:
+            create_tweet = False
 
-        if counter % 30 == 0:
-            create_tweet = True
+            if counter % 30 == 0:
+                create_tweet = True
 
-        test = Test()
-        test.get_poll_path(key='paredao', index=8)
-        test_response = test.request(create_tweet=str(create_tweet))
+            test = Test()
+            test.get_poll_path(key='paredao', index=9)
+            test_response = test.request(create_tweet=str(create_tweet))
 
-        msg = (
-            f'Create Tweet: {create_tweet} | '
-            f'{test_response} | '
-            f'Request Index {counter}')
+            msg = (
+                f'Create Tweet: {create_tweet} | '
+                f'{test_response} | '
+                f'Request Index {counter}')
 
-        print(msg)
+            print(msg)
+            counter += 1
+
+        except Exception:
+            Helpers.log(
+                today_is=today_is['formatted'],
+                string_to_log=json.dumps(
+                    obj={
+                        'error': format_exc().replace("\n", " ")
+                    }, 
+                    indent= 4
+                ),
+                file_path='./log/',
+                prefix='log_tests_error'
+            )
+            
+            print('Somenthing went wrong with Tests script. Logging Error.')
+
         sleep(120)
-        counter += 1
