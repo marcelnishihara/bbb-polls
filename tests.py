@@ -55,18 +55,18 @@ class Test:
 
 
 if __name__ == '__main__':
-    counter = 1
+    counter = 0
     today_is = Helpers.datetime()
 
     while True:
         try:
             create_tweet = False
 
-            if counter % 30 == 0:
+            if counter % 10 == 0:
                 create_tweet = True
 
             test = Test()
-            test.get_poll_path(key='paredao', index=9)
+            test.get_poll_path(key='paredao', index=10)
             test_response = test.request(create_tweet=str(create_tweet))
 
             msg = (
@@ -89,7 +89,7 @@ if __name__ == '__main__':
                 file_path='./log/',
                 prefix='log_tests_error'
             )
-            
-            print('Somenthing went wrong with Tests script. Logging Error.')
+
+            print('\nSomenthing went wrong with Tests script. Error Logged.\n')
 
         sleep(120)
