@@ -62,11 +62,11 @@ if __name__ == '__main__':
         try:
             create_tweet = False
 
-            if counter % 10 == 0:
+            if counter % 120 == 0:
                 create_tweet = True
 
             test = Test()
-            test.get_poll_path(key='paredao', index=10)
+            test.get_poll_path(key='paredao', index=12)
             test_response = test.request(create_tweet=str(create_tweet))
 
             msg = (
