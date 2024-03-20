@@ -62,7 +62,7 @@ if __name__ == '__main__':
         try:
             create_tweet = False
 
-            if counter % 120 == 0:
+            if counter % 10 == 0:
                 create_tweet = True
 
             test = Test()
