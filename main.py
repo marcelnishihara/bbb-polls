@@ -33,7 +33,7 @@ def process(request: flask.Request, today_is: dict) -> tuple:
 
     if create_tweet:
         twitter_session = Twitter(poll_data)
-        tweet_data = twitter_session.post(today_is=today_is)
+        tweet_data = twitter_session.post(today_is=today_is, counter_limit=4)
 
         Helpers.log(
             today_is=today_is['formatted'],

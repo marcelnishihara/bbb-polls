@@ -66,7 +66,7 @@ if __name__ == '__main__':
                 create_tweet = True
 
             test = Test()
-            test.get_poll_path(key='paredao', index=12)
+            test.get_poll_path(key='paredao', index=13)
             test_response = test.request(create_tweet=str(create_tweet))
 
             msg = (
