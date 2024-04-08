@@ -55,18 +55,18 @@ class Test:
 
 
 if __name__ == '__main__':
-    counter = 0
+    counter = 1
     today_is = Helpers.datetime()
 
     while True:
         try:
             create_tweet = False
 
-            if counter % 10 == 0:
+            if counter % 15 == 0:
                 create_tweet = True
 
             test = Test()
-            test.get_poll_path(key='paredao', index=13)
+            test.get_poll_path(key='paredao', index=18)
             test_response = test.request(create_tweet=str(create_tweet))
 
             msg = (
