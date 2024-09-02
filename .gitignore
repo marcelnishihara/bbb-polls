@@ -1,12 +1,12 @@
 # FOLDERS
 env/
 __pycache__/
-log/
 
 # FILES
 *.json
 *.html
 credentials/__credentials.sh
+log/log_*
 
 # EXCEPTIONS
-!polls.json
+!database/*
