@@ -57,13 +57,13 @@ class Test:
 
 
 if __name__ == '__main__':
-    counter = 0
+    counter = 1
     today_is = Helpers.datetime()
     poll_index = 29
 
     while True:
         try:
-            create_tweet = True
+            create_tweet = False
 
             if counter % 2 == 0:
                 create_tweet = True
