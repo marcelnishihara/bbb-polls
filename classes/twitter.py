@@ -27,8 +27,8 @@ class Twitter:
         '''Method __compose_msg
         '''
         self.msg = (
-            f'Parcial da enquete @Splash_UOL BBB 24: '
-            f'"{self.data["title"]}" #BBB24\n\n')
+            f'Parcial da enquete @Splash_UOL #BBB25: '
+            f'"{self.data["title"]}" #RedeBBB\n\n')
 
         firsts_three_percentage_sum = 0
         counter = 0
@@ -83,7 +83,24 @@ class Twitter:
         self.__compose_msg(
             counter_limit=counter_limit,
             poll_number_of_players=len(self.data['players']),
-            today_is=today_is)
+            today_is=today_is
+        )
 
-        response = self.__client.create_tweet(text=self.msg)
-        return response.data
+        tweet_length = len(self.msg)
+        print(f'Tweet Length: {tweet_length} characters')
+
+        if tweet_length <= 280:
+            response = self.__client.create_tweet(text=self.msg)
+            
+            return {
+                'success': True,
+                'tweet_length': tweet_length,
+                'response_data': response.data
+            }
+
+        else:
+            return {
+                'success': False,
+                'tweet_length': tweet_length,
+                'error': 'Tweet message is too long'
+            }

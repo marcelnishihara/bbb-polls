@@ -14,7 +14,9 @@ def process(request: flask.Request, today_is: dict) -> tuple:
     """
     splash_uol = SplashUOL(
             today_is=today_is['formatted'],
-            poll_path=request.headers['Endpoint'])
+            poll_path=request.headers['Endpoint']
+    )
+
     splash_uol.run()
     poll_data = splash_uol.get_poll_data()
 
@@ -32,8 +34,16 @@ def process(request: flask.Request, today_is: dict) -> tuple:
     tuple_to_return = ('Poll Data Logged', 200)
 
     if create_tweet:
+        if RequestAnalysis.is_valid_limit(headers=request.headers):
+            counter_limit = int(request.headers['Limit'])
+        else:
+            counter_limit = 3
+
         twitter_session = Twitter(poll_data)
-        tweet_data = twitter_session.post(today_is=today_is, counter_limit=4)
+        tweet_data = twitter_session.post(
+            today_is=today_is, 
+            counter_limit=counter_limit
+        )
 
         Helpers.log(
             today_is=today_is['formatted'],
@@ -42,7 +52,10 @@ def process(request: flask.Request, today_is: dict) -> tuple:
             prefix='log_tweet_data'
         )
 
-        tuple_to_return = ('Tweet Created', 201)
+        if tweet_data['success']:
+            tuple_to_return = ('Tweet Created', 201)
+        else:
+            tuple_to_return = ('Tweet Too Long', 413)
 
     return tuple_to_return
 

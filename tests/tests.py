@@ -8,6 +8,7 @@ import json
 import requests
 
 from time import sleep
+from tqdm import tqdm
 from traceback import format_exc
 
 
@@ -38,7 +39,8 @@ class Test:
             headers={
                 'Endpoint': self.__poll_path,
                 'Tweet': create_tweet,
-                'Uuid': client_uuid
+                'Uuid': client_uuid,
+                'Limit': 'tonhao'
             }
         )
 
@@ -55,26 +57,29 @@ class Test:
 
 
 if __name__ == '__main__':
-    counter = 1
+    counter = 0
     today_is = Helpers.datetime()
+    poll_index = 29
 
     while True:
         try:
-            create_tweet = False
+            create_tweet = True
 
-            if counter % 360 == 0:
+            if counter % 2 == 0:
                 create_tweet = True
 
             test = Test()
-            test.get_poll_path(key='paredao', index=-1)
+            test.get_poll_path(key='misc', index=poll_index)
             test_response = test.request(create_tweet=str(create_tweet))
 
             msg = (
-                f'Create Tweet: {create_tweet} | '
+                f'Request Should Create Tweet: {create_tweet} | '
                 f'{test_response} | '
+                f'Poll Index: {poll_index} | '
                 f'Request Index {counter}')
 
             print(msg)
+
             counter += 1
 
         except Exception:
@@ -92,4 +97,7 @@ if __name__ == '__main__':
 
             print('\nSomenthing went wrong with Tests script. Error Logged.\n')
 
-        sleep(120)
+        time_to_next_process = 1200
+
+        for _ in tqdm(range(time_to_next_process), desc="Next Request: "):
+            sleep(1)

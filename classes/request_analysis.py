@@ -121,3 +121,19 @@ class RequestAnalysis:
             return False
         else:
             return False
+
+
+    @staticmethod
+    def is_valid_limit(headers: Dict[str, str]) -> bool:
+        """Public Static Method is_valid_limit
+        """
+        is_valid = False
+
+        if 'Limit' in headers:
+            is_valid = (
+                headers['Limit'].isdigit() and
+                int(headers['Limit']) > 0 and
+                int(headers['Limit']) <= 4
+            )
+
+        return is_valid
