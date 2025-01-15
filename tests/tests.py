@@ -40,7 +40,7 @@ class Test:
                 'Endpoint': self.__poll_path,
                 'Tweet': create_tweet,
                 'Uuid': client_uuid,
-                'Limit': 'tonhao'
+                'Limit': str(3)
             }
         )
 
