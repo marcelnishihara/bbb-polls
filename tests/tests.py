@@ -57,19 +57,23 @@ class Test:
 
 
 if __name__ == '__main__':
-    counter = 1
+    counter = 0
     today_is = Helpers.datetime()
-    poll_index = 29
+    poll_index = 23
 
     while True:
         try:
             create_tweet = False
+            tweet_conditions = (
+                (counter % 4 == 0 and counter <= 12) or
+                (counter % 36 == 0 and counter >= 144)
+            )
 
-            if counter % 2 == 0:
+            if tweet_conditions:
                 create_tweet = True
 
             test = Test()
-            test.get_poll_path(key='misc', index=poll_index)
+            test.get_poll_path(key='paredao', index=poll_index)
             test_response = test.request(create_tweet=str(create_tweet))
 
             msg = (
@@ -97,7 +101,7 @@ if __name__ == '__main__':
 
             print('\nSomenthing went wrong with Tests script. Error Logged.\n')
 
-        time_to_next_process = 1200
+        time_to_next_process = 300
 
         for _ in tqdm(range(time_to_next_process), desc="Next Request: "):
             sleep(1)
