@@ -65,8 +65,8 @@ if __name__ == '__main__':
         try:
             create_tweet = False
             tweet_conditions = (
-                (counter % 4 == 0 and counter <= 12) or
-                (counter % 36 == 0 and counter >= 144)
+                (counter == 0) or
+                (counter >= 10000)
             )
 
             if tweet_conditions:

@@ -1,6 +1,6 @@
 # BBB Polls
 
-Este repositório contém o código-fonte de uma Cloud Function desenvolvida para o reality show Big Brother Brasil (BBB). A Cloud Function é projetada para extrair dados parciais de enquetes promovidas pela [Splash](https://www.uol.com.br/splash/), portal de entretenimento da [UOL](https://www.uol.com.br/), e publicá-los tweets na conta [@bbb_polls no X (Twitter)](https://twitter.com/bbb_polls/).
+Este repositório contém o código-fonte de uma Cloud Function desenvolvida para o reality show Big Brother Brasil (BBB). A Cloud Function é projetada para extrair dados parciais de enquetes promovidas pela [Splash](https://www.uol.com.br/splash/), portal de entretenimento da [UOL](https://www.uol.com.br/), e publicá-los na conta [@bbb_polls no X (Twitter)](https://twitter.com/bbb_polls/).
 
 ## Sobre o Big Brother Brasil
 
