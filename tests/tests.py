@@ -40,7 +40,7 @@ class Test:
                 'Endpoint': self.__poll_path,
                 'Tweet': create_tweet,
                 'Uuid': client_uuid,
-                'Limit': str(3)
+                'Limit': str(4)
             }
         )
 
@@ -59,14 +59,15 @@ class Test:
 if __name__ == '__main__':
     counter = 0
     today_is = Helpers.datetime()
-    poll_index = 23
+    poll_index = 24
 
     while True:
         try:
             create_tweet = False
             tweet_conditions = (
                 (counter == 0) or
-                (counter >= 10000)
+                (counter % 6 == 0 and counter <= 24) or
+                (counter % 36 == 0 and counter >= 132)
             )
 
             if tweet_conditions:
