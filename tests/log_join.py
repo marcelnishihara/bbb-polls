@@ -24,7 +24,7 @@ log_files_data = list(map(
     log_files
 ))
 
-poll_endpoint = '/2025/01/27/bbb-25---enquete-uol-qual-dupla-voce-quer-eliminar-no-segundo-paredao.htm'
+poll_endpoint = '/2025/02/10/bbb-25---enquete-uol-quem-voce-quer-eliminar-no-quarto-paredao.htm'
 
 log_files_data = list(filter(
     lambda data: 'url' in data and poll_endpoint in data['url'] and data['players'] != [],
@@ -35,7 +35,7 @@ data = sorted(log_files_data, key=lambda partial: partial['todayIs'])
 
 print(len(data))
 
-csv_file = "flourish_bar_chart_race_0332.csv"
+csv_file = "flourish_bar_chart_race.csv"
 
 def format_today_is(date_str):
     date_obj = datetime.datetime.strptime(date_str[:19], "%Y_%m_%d_%H_%M_%S")

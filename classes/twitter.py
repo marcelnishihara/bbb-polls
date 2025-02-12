@@ -87,7 +87,13 @@ class Twitter:
         )
 
         tweet_length = len(self.msg)
-        print(f'Tweet Length: {tweet_length} characters')
+        tweet_length_diff = 280 - tweet_length
+
+        print(
+            f'Tweet Length: {tweet_length} '
+            f'of 280 characters ({tweet_length_diff} '
+            'more characters allowed).'
+        )
 
         if tweet_length <= 280:
             response = self.__client.create_tweet(text=self.msg)
