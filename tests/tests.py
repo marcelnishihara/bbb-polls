@@ -59,13 +59,14 @@ class Test:
 if __name__ == '__main__':
     counter = 0
     today_is = Helpers.datetime()
-    poll_index = 25
+    poll_index = 27
 
     while True:
         try:
             create_tweet = False
             tweet_conditions = (
-                counter > 1000
+                (counter % 4 == 0 and counter <= 24) or
+                (counter % 36 == 0 and counter >= 144)
             )
 
             if tweet_conditions:
