@@ -66,7 +66,7 @@ class SplashUOL:
             ['_value']))
 
         poll_title = re.search(
-                pattern='(.*)\:(.*)',
+                pattern='(BBB 25 - Enquete UOL - )(.*)',
                 string=self.__poll_html_code_to_json['poll']['title'])
 
         self.__poll_data = {
