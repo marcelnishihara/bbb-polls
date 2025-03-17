@@ -40,7 +40,7 @@ class Test:
                 'Endpoint': self.__poll_path,
                 'Tweet': create_tweet,
                 'Uuid': client_uuid,
-                'Limit': str(4)
+                'Limit': str(3)
             }
         )
 
@@ -57,23 +57,24 @@ class Test:
 
 
 if __name__ == '__main__':
-    counter = 16
     today_is = Helpers.datetime()
-    poll_index = 29
+    poll_key = 'paredao'
+    poll_index = 30
+    counter = 0
 
     while True:
         try:
             create_tweet = False
             tweet_conditions = (
-                (counter % 4 == 0 and counter <= 20) or
-                (counter % 24 == 0 and counter >= 144)
+                (counter % 4 == 0 and counter <= 24) or
+                (counter != 0 and counter % 24 == 0 and counter >= 120)
             )
 
             if tweet_conditions:
                 create_tweet = True
 
             test = Test()
-            test.get_poll_path(key='paredao', index=poll_index)
+            test.get_poll_path(key=poll_key, index=poll_index)
             test_response = test.request(create_tweet=str(create_tweet))
 
             msg = (

@@ -24,7 +24,7 @@ log_files_data = list(map(
     log_files
 ))
 
-poll_endpoint = '/2025/03/02/bbb-25---enquete-uol---quem-voce-quer-eliminar-camila-renata-ou-vilma.htm'
+poll_endpoint = '/2025/03/10/bbb-25---enquete-uol---8-paredao.htm'
 
 log_files_data = list(filter(
     lambda data: 'url' in data and poll_endpoint in data['url'] and data['players'] != [],
