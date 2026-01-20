@@ -27,7 +27,7 @@ class Twitter:
         '''Method __compose_msg
         '''
         self.msg = (
-            f'Parcial da enquete @Splash_UOL #BBB25: '
+            f'Parcial da enquete @Splash_UOL #BBB26: '
             f'"{self.data["title"]}" #RedeBBB\n\n')
 
         firsts_three_percentage_sum = 0

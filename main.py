@@ -94,4 +94,4 @@ def main(request) -> tuple:
             return (bad_request_json, 400)
 
     except Exception:
-        return (format_exc().replace("\n", " "), 500)
+        return (format_exc().replace('\n', ' '), 500)

@@ -62,11 +62,11 @@ class SplashUOL:
             ['body']
             [0]
             ['script']
-            [7]
+            [6]
             ['_value']))
 
         poll_title = re.search(
-                pattern='(BBB 25 - Enquete UOL: )(.*)',
+                pattern='(BBB 26 - Enquete UOL: )(.*)',
                 string=self.__poll_html_code_to_json['poll']['title'])
 
         self.__poll_data = {
