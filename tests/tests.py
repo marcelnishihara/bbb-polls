@@ -12,7 +12,7 @@ from tqdm import tqdm
 from traceback import format_exc
 
 
-class Test:
+class Client:
     def __init__(self) -> None:
         self.__poll_path = ''
 
@@ -59,21 +59,20 @@ class Test:
 if __name__ == '__main__':
     today_is = Helpers.datetime()
     poll_key = 'paredao'
-    poll_index = 42
+    poll_index = 46
     counter = 0
 
     while True:
         try:
             create_tweet = False
             tweet_conditions = (
-                (counter % 6 == 0 and counter <= 20) or
-                (counter != 0 and counter % 24 == 0 and counter >= 120)
+                (counter % 12 == 0 and counter != 0)
             )
 
             if tweet_conditions:
                 create_tweet = True
 
-            test = Test()
+            test = Client()
             test.get_poll_path(key=poll_key, index=poll_index)
             test_response = test.request(create_tweet=str(create_tweet))
 

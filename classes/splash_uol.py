@@ -67,7 +67,8 @@ class SplashUOL:
 
         poll_title = re.search(
                 pattern='(BBB 26 - Enquete UOL: )(.*)',
-                string=self.__poll_html_code_to_json['poll']['title'])
+                string=self.__poll_html_code_to_json['poll']['title'],
+                flags=re.IGNORECASE)
 
         self.__poll_data = {
             'todayIs': self.__today_is,
