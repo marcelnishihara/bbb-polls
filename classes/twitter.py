@@ -19,10 +19,9 @@ class Twitter:
             access_token_secret=os.environ['TWITTER_ACCESS_TOKEN_SECRET'])
 
 
-    def __compose_msg(
+    def compose_msg(
             self,
             today_is: dict,
-            poll_number_of_players: int,
             counter_limit: int = 3) -> None:
         '''Method __compose_msg
         '''
@@ -49,7 +48,7 @@ class Twitter:
             else:
                 break
 
-        if poll_number_of_players > counter_limit:
+        if len(self.data['players']) > counter_limit:
             rest = format(100-firsts_three_percentage_sum, '.2f')
             self.msg += f'\nOs demais somam {rest.replace(".", ",")}%'
 
@@ -77,14 +76,15 @@ class Twitter:
             f'{now[5]}')
 
 
-    def post(self, today_is: dict, counter_limit: int = 3) -> dict:
+    def post(self) -> dict:
         '''Method post
         '''
-        self.__compose_msg(
-            counter_limit=counter_limit,
-            poll_number_of_players=len(self.data['players']),
-            today_is=today_is
-        )
+        if not self.msg:
+            return {
+                'success': False, 
+                'tweet_length': None, 
+                'error': 'There\'s no tweet message'
+            }
 
         tweet_length = len(self.msg)
         tweet_length_diff = 280 - tweet_length
@@ -97,7 +97,7 @@ class Twitter:
 
         if tweet_length <= 280:
             response = self.__client.create_tweet(text=self.msg)
-            
+
             return {
                 'success': True,
                 'tweet_length': tweet_length,

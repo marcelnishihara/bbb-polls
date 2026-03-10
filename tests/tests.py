@@ -59,14 +59,14 @@ class Client:
 if __name__ == '__main__':
     today_is = Helpers.datetime()
     poll_key = 'paredao'
-    poll_index = 46
+    poll_index = 49
     counter = 0
 
     while True:
         try:
             create_tweet = False
             tweet_conditions = (
-                (counter % 12 == 0 and counter != 0)
+                (counter % 12 == 0)
             )
 
             if tweet_conditions:

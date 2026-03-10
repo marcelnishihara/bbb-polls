@@ -40,10 +40,23 @@ def process(request: flask.Request, today_is: dict) -> tuple:
             counter_limit = 3
 
         twitter_session = Twitter(poll_data)
-        tweet_data = twitter_session.post(
-            today_is=today_is, 
+        twitter_session.compose_msg(
+            today_is=today_is,
             counter_limit=counter_limit
         )
+
+        Helpers.log(
+            today_is=today_is['formatted'],
+            string_to_log=twitter_session.msg,
+            file_path='./tweets/',
+            prefix='log_tweet_msg',
+            extension='txt'
+        )
+
+        return ('Tweet Message Logged', 200)
+
+        '''
+        tweet_data = twitter_session.post()
 
         Helpers.log(
             today_is=today_is['formatted'],
@@ -55,7 +68,8 @@ def process(request: flask.Request, today_is: dict) -> tuple:
         if tweet_data['success']:
             tuple_to_return = ('Tweet Created', 201)
         else:
-            tuple_to_return = ('Tweet Too Long', 413)
+            tuple_to_return = (tweet_data['error'], tweet_data['status_code'])
+        '''
 
     return tuple_to_return
 

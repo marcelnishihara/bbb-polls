@@ -7,6 +7,7 @@ __pycache__/
 *.html
 credentials/__credentials.sh
 log/log_*
+tweets/log_*
 
 # EXCEPTIONS
 !database/*
