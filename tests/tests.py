@@ -19,14 +19,15 @@ class Client:
 
     def get_poll_path(
             self, 
-            key: str, 
+            key: str,
+            season: str,
             index: int, 
             file = './database/polls.json') -> None:
         with open(file=file, mode='r', encoding='utf-8') as polls_file:
             polls = json.loads(s=polls_file.read())
             polls_file.close()
         
-        self.__poll_path = polls[key][index]
+        self.__poll_path = polls[key][season][index]
 
 
     def request(self, create_tweet = str, method: str = 'GET') -> str:        
@@ -37,6 +38,7 @@ class Client:
             url='http://0.0.0.0:8080',
             timeout=10,
             headers={
+                'Season': str(2026),
                 'Endpoint': self.__poll_path,
                 'Tweet': create_tweet,
                 'Uuid': client_uuid,
@@ -59,7 +61,8 @@ class Client:
 if __name__ == '__main__':
     today_is = Helpers.datetime()
     poll_key = 'paredao'
-    poll_index = 58
+    season_year = str(2026)
+    poll_index = 16
     counter = 0
 
     while True:
@@ -73,12 +76,13 @@ if __name__ == '__main__':
                 create_tweet = True
 
             test = Client()
-            test.get_poll_path(key=poll_key, index=poll_index)
+            test.get_poll_path(key=poll_key, season=season_year, index=poll_index)
             test_response = test.request(create_tweet=str(create_tweet))
 
             msg = (
                 f'Request Should Create Tweet: {create_tweet} | '
                 f'{test_response} | '
+                f'Season Year: {season_year} | '
                 f'Poll Index: {poll_index} | '
                 f'Request Index {counter}')
 
