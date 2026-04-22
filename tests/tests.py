@@ -62,7 +62,7 @@ if __name__ == '__main__':
     today_is = Helpers.datetime()
     poll_key = 'paredao'
     season_year = str(2026)
-    poll_index = 16
+    poll_index = 18
     counter = 0
 
     while True:

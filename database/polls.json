@@ -1,6 +1,7 @@
 {
     "urlBase": "https://www.uol.com.br/splash/bbb/enquetes",
     "paredao": {
+        "2023": [],
         "2024": [
             "/2024/01/09/bbb-24---enquete-uol-quem-voce-quer-fique-maycon-giovanna-ou-yasmin-brunet.htm",
             "/2024/01/12/bbb-24---enquete-uol-quem-voce-quer-que-fique-na-casa.htm",
@@ -64,42 +65,9 @@
             "/2026/04/06/bbb-26---enquete-uol-quem-voce-quer-eliminar-no-14-paredao.htm",
             "/2026/04/10/bbb-26---enquete-uol-quem-voce-quer-eliminar-no-15-paredao.htm",
             "/2026/04/13/bbb-26---enquete-uol-quem-voce-quer-eliminar-no-16-paredao.htm",
-            "/2026/04/14/bbb-26---enquete-uol-quem-voce-quer-eliminar-no-17-paredao.htm"
+            "/2026/04/14/bbb-26---enquete-uol-quem-voce-quer-eliminar-no-17-paredao.htm",
+            "/2026/04/17/bbb-26---enquete-uol-quem-voce-quer-eliminar-no-18-paredao.htm",
+            "/2026/04/20/bbb-26---enquete-uol-quem-voce-quer-que-venca-a-edicao.htm"
         ]
-    },
-    "misc": [
-        "/2024/01/05/bbb-24---enquete-uol-ate-agora-qual-dos-participantes-anunciados-e-o-seu-preferido.htm",
-        "/2024/01/07/bbb-24---enquete-uol-qual-das-6-mulheres-voce-quer-ver-entre-participantes.htm",
-        "/2024/01/07/bbb-24---enquete-uol-quem-voce-quer-ver-entre-os-participantes.htm",
-        "/2024/01/05/bbb-24---enquete-uol-ate-agora-qual-dos-participantes-anunciados-e-o-seu-preferido.htm",
-        "/2024/01/08/bbb-24---enquete-uol-com-qual-dos-participantes-voce-teve-menos-afinidade.htm",
-        "/2024/01/11/bbb-24---enquete-uol-quem-o-segundo-lider-vai-indicar-ao-paredao.htm",
-        "/2024/02/02/bbb-24---enquete-uol-quem-voce-acha-que-a-lider-fernanda-vai-indicar.htm",
-        "/2024/02/06/bbb-24---enquete-uol-apos-setima-eliminacao-quem-e-o-mais-odiado-da-casa.htm",
-        "/2024/02/06/bbb-24---enquete-uol-quem-e-o-favorito-apos-setima-eliminacao.htm",
-        "/2024/03/08/bbb-24---enquete-uol-para-voce-bia-devia-ter-aberto-mao-da-lideranca-por-davi.htm",
-        "/2024/03/09/bbb-24---enquete-uol-quem-buda-vai-salvar-do-paredao-com-o-poder-curinga.htm",
-        "/2024/03/09/bbb-24---enquete-uol-quem-a-lider-beatriz-vai-indicar-ao-paredao-no-domingo.htm",
-        "/2024/03/15/bbb-24---enquete-uol-quem-a-lider-giovanna-vai-indicar-ao-paredao-domingo.htm",
-        "/2024/03/12/bbb-24---enquete-uol-apos-eliminacao-de-yasmin-quem-e-o-mais-odiado-do-reality-global.htm",
-        "/2024/03/22/bbb-24---enquete-uol-quem-a-lider-giovanna-vai-indicar-ao-paredao-domingo.htm",
-        "/2024/04/07/enquete-uol-bbb-24-apos-eliminacao-de-giovanna-quem-e-o-mais-odiado-do-top-6.htm",
-        "/2024/12/16/enquete-uol-bbb-25-qual-e-a-sua-expectativa-para-a-edicao.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-vitoria-strada-e-mateus.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-edilberto-e-raissa.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-camilla-e-thamiris.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-vinicius-e-aline.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-diogo-almeida-e-vilma.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-joao-pedro-e-joao-gabriel.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-eva-e-renata.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-gracyanne-e-giovanna.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-arleane-e-marcelo.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-mayke-e-gabriel.htm",
-        "/2025/01/09/bbb-25---enquete-uol-o-que-voce-achou-da-dupla-diego-e-daniele.htm",
-        "/2025/01/13/bbb-25---enquete-uol-qual-dupla-e-a-sua-favorita.htm",
-        "/2025/01/13/bbb-25---enquete-uol-qual-dupla-voce-menos-gostou.htm",
-        "/2025/01/17/bbb-25---enquete-uol-quem-a-dupla-aline-e-vinicius-vai-indicar-ao-paredao.htm",
-        "/2025/01/28/bbb-25---enquete-uol-com-o-fim-das-duplas-quem-e-o-favorito-para-vencer-o-programa.htm",
-        "/2025/03/11/bbb-25---enquete-uol-vitrine-do-seu-fifi.htm"
-    ]
+    }
 }
