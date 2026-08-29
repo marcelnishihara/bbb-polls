@@ -1,3 +1,9 @@
+"""Módulo principal da Google Cloud Function.
+
+Coordena a validação de requisições, a extração de dados de enquetes
+do Splash/UOL, o registro de logs e a geração de mensagens para tweets.
+"""
+
 from classes.helpers import Helpers
 from classes.request_analysis import RequestAnalysis
 from classes.splash_uol import SplashUOL
@@ -10,11 +16,25 @@ from traceback import format_exc
 
 
 def process(request: flask.Request, today_is: dict) -> tuple:
-    """Function process
+    """Processa a extração dos dados e gerencia logs e mensagens.
+
+    Instancia o extrator do Splash/UOL, salva os dados coletados em
+    formato JSON, avalia se deve preparar a mensagem de tweet e
+    realiza o log do texto gerado.
+
+    Args:
+        request (flask.Request): Objeto da requisição HTTP recebida
+            contendo os cabeçalhos necessários ('Endpoint', 'Tweet',
+            opcionalmente 'Limit').
+        today_is (dict): Dicionário contendo instâncias e formatos da
+            data/hora atual.
+
+    Returns:
+        tuple: Tupla com a mensagem de status e o código HTTP.
     """
     splash_uol = SplashUOL(
-            today_is=today_is['formatted'],
-            poll_path=request.headers['Endpoint']
+        today_is=today_is['formatted'],
+        poll_path=request.headers['Endpoint']
     )
 
     splash_uol.run()
@@ -68,14 +88,28 @@ def process(request: flask.Request, today_is: dict) -> tuple:
         if tweet_data['success']:
             tuple_to_return = ('Tweet Created', 201)
         else:
-            tuple_to_return = (tweet_data['error'], tweet_data['status_code'])
+            tuple_to_return = (
+                tweet_data['error'],
+                tweet_data['status_code']
+            )
         '''
 
     return tuple_to_return
 
 
 def main(request) -> tuple:
-    """Function main
+    """Ponto de entrada (entry point) da Cloud Function.
+
+    Valida os cabeçalhos de segurança e integridade da requisição.
+    Em caso de sucesso, encaminha para o processamento; caso contrário,
+    registra o log de erro e retorna Bad Request (HTTP 400).
+
+    Args:
+        request (flask.Request): Objeto da requisição HTTP do
+            Flask/Cloud Functions.
+
+    Returns:
+        tuple: Tupla contendo o corpo da resposta e o status code HTTP.
     """
     today_is = Helpers.datetime()
 
@@ -85,13 +119,16 @@ def main(request) -> tuple:
 
     try:
         if is_valid_request:
-            tuple_to_return = process(request=request, today_is=today_is)
+            tuple_to_return = process(
+                request=request,
+                today_is=today_is
+            )
             return tuple_to_return
 
         else:
             bad_request_json = json.dumps(
                 obj={
-                    'badRequest': True, 
+                    'badRequest': True,
                     'todayIs': today_is['formatted'],
                     'explanation': explanation
                 },

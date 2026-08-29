@@ -1,4 +1,4 @@
-"""Module for Security
+"""Módulo de validação de requisições, segurança e parâmetros HTTP.
 """
 
 from classes.helpers import Helpers
@@ -11,9 +11,15 @@ from typing import Dict, List, Union, Tuple
 
 
 class RequestAnalysis:
+    """Validação e autenticação das requisições recebidas.
+    """
+
     @staticmethod
     def __create_uuid_name_parameter() -> str:
-        """Private Static Method __create_uuid_name_parameter
+        """Gera a string base temporal para o UUID da sessão.
+
+        Returns:
+            str: Data e hora no formato 'AAAA_MM_DD_HH_MM'.
         """
         helpers_datetime = Helpers.datetime()
         
@@ -36,7 +42,13 @@ class RequestAnalysis:
 
     @staticmethod
     def __create_session_uuid(uuid_name: str) -> str:
-        """Private Static Method __generate_session_uuid
+        """Gera um UUID v5 baseado no namespace de ambiente.
+
+        Args:
+            uuid_name (str): Nome base temporal para a sessão.
+
+        Returns:
+            str: String representativa do UUID v5 gerado.
         """
         namespace = uuid.UUID(hex=os.environ['UUID'])
         return str(uuid.uuid5(namespace=namespace, name=uuid_name))
@@ -44,13 +56,25 @@ class RequestAnalysis:
 
     @staticmethod
     def __is_valid_endpoint(endpoint: str) -> bool:
-        """Private Static Method __is_valid_endpoint
+        """Verifica se o endpoint é acessível e retorna HTTP 200.
+
+        Args:
+            endpoint (str): Caminho relativo da enquete no Splash/UOL.
+
+        Returns:
+            bool: True se começar com '/' e retornar 200, False se não.
         """
-        poll_url_prefix = 'https://www.uol.com.br/splash/bbb/enquetes'
+        poll_url_prefix = (
+            'https://www.uol.com.br/splash/bbb/enquetes'
+        )
         
         if endpoint.startswith('/'):
             url = f'{poll_url_prefix}{endpoint}'
-            response = requests.request(method='GET', url=url, timeout=2)
+            response = requests.request(
+                method='GET',
+                url=url,
+                timeout=2
+            )
             return True if response.status_code == 200 else False
         else:
             return False
@@ -58,15 +82,29 @@ class RequestAnalysis:
 
     @staticmethod
     def create_session_uuid_for_tests() -> str:
+        """Gera o UUID temporal de sessão para scripts de teste.
+
+        Returns:
+            str: UUID v5 válido para o minuto corrente.
+        """
         uuid_name = RequestAnalysis.__create_uuid_name_parameter()
-        return RequestAnalysis.__create_session_uuid(uuid_name=uuid_name)
+        return RequestAnalysis.__create_session_uuid(
+            uuid_name=uuid_name
+        )
 
 
     @staticmethod
     def is_valid_request(
         headers: Dict[str, str]
         ) -> Tuple[bool, Union[None, List]]:
-        """Public Static Method is_valid_request
+        """Valida autenticação, endpoint e parâmetros da requisição.
+
+        Args:
+            headers (Dict[str, str]): Cabeçalhos HTTP recebidos.
+
+        Returns:
+            Tuple[bool, Union[None, List]]: Tupla com booleano de
+                validade e lista de erros caso inválida (ou None).
         """
         uuid_name = RequestAnalysis.__create_uuid_name_parameter()
         session_uuid = RequestAnalysis.__create_session_uuid(
@@ -108,12 +146,21 @@ class RequestAnalysis:
             is_valid_tweet and
             is_valid_endpoint)
 
-        return (True, None) if is_valid_request else (False, request_not_valid) 
+        return (
+            (True, None) if is_valid_request
+            else (False, request_not_valid)
+        )
 
 
     @staticmethod
     def create_tweet(bool_as_string: str) -> bool:
-        """Public Static Method create_tweet
+        """Converte parâmetro string de tweet em booleano.
+
+        Args:
+            bool_as_string (str): Valor em string ('true'/'false').
+
+        Returns:
+            bool: True se for 'true', False caso contrário.
         """
         if bool_as_string.lower() == 'true':
             return True
@@ -125,7 +172,13 @@ class RequestAnalysis:
 
     @staticmethod
     def is_valid_limit(headers: Dict[str, str]) -> bool:
-        """Public Static Method is_valid_limit
+        """Verifica se 'Limit' é inteiro válido entre 1 e 4.
+
+        Args:
+            headers (Dict[str, str]): Dicionário de cabeçalhos HTTP.
+
+        Returns:
+            bool: True se 'Limit' for inteiro em [1, 4], False se não.
         """
         is_valid = False
 

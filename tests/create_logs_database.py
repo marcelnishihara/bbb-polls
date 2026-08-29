@@ -1,3 +1,7 @@
+"""Script utilitário para consolidar múltiplos arquivos de log
+individuais em uma base JSON única.
+"""
+
 import json
 import re
 

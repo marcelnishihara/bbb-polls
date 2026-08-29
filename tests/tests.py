@@ -1,4 +1,4 @@
-"""Module for tests
+"""Módulo de testes automatizados e simulação periódica.
 """
 
 from classes.request_analysis import RequestAnalysis
@@ -13,7 +13,12 @@ from traceback import format_exc
 
 
 class Client:
+    """Cliente HTTP para testes da Cloud Function.
+    """
+
     def __init__(self) -> None:
+        """Inicializa a instância do cliente de testes.
+        """
         self.__poll_path = ''
 
 
@@ -23,14 +28,39 @@ class Client:
             season: str,
             index: int, 
             file = './database/polls.json') -> None:
-        with open(file=file, mode='r', encoding='utf-8') as polls_file:
+        """Carrega endpoint da enquete a partir da base JSON.
+
+        Args:
+            key (str): Chave do tipo de enquete (ex: 'paredao').
+            season (str): Ano da edição do programa (ex: '2026').
+            index (int): Índice da enquete na lista.
+            file (str, optional): Caminho do arquivo JSON de enquetes.
+                Padrão é './database/polls.json'.
+        """
+        with open(
+            file=file,
+            mode='r',
+            encoding='utf-8'
+        ) as polls_file:
             polls = json.loads(s=polls_file.read())
             polls_file.close()
         
         self.__poll_path = polls[key][season][index]
 
 
-    def request(self, create_tweet = str, method: str = 'GET') -> str:        
+    def request(
+            self,
+            create_tweet = str,
+            method: str = 'GET') -> str:        
+        """Envia requisição simulada com cabeçalhos autenticados.
+
+        Args:
+            create_tweet (str): Flag ('True'/'False') para postagem.
+            method (str, optional): Método HTTP. Padrão é 'GET'.
+
+        Returns:
+            str: Resumo do status code e corpo retornado.
+        """
         client_uuid = RequestAnalysis.create_session_uuid_for_tests()
 
         response = requests.request(
@@ -76,8 +106,14 @@ if __name__ == '__main__':
                 create_tweet = True
 
             test = Client()
-            test.get_poll_path(key=poll_key, season=season_year, index=poll_index)
-            test_response = test.request(create_tweet=str(create_tweet))
+            test.get_poll_path(
+                key=poll_key,
+                season=season_year,
+                index=poll_index
+            )
+            test_response = test.request(
+                create_tweet=str(create_tweet)
+            )
 
             msg = (
                 f'Request Should Create Tweet: {create_tweet} | '
@@ -97,15 +133,21 @@ if __name__ == '__main__':
                     obj={
                         'error': format_exc().replace("\n", " ")
                     }, 
-                    indent= 4
+                    indent=4
                 ),
                 file_path='./log/',
                 prefix='log_tests_error'
             )
 
-            print('\nSomenthing went wrong with Tests script. Error Logged.\n')
+            print(
+                '\nSomenthing went wrong with Tests script. '
+                'Error Logged.\n'
+            )
 
         time_to_next_process = 300
 
-        for _ in tqdm(range(time_to_next_process), desc="Next Request: "):
+        for _ in tqdm(
+            range(time_to_next_process),
+            desc="Next Request: "
+        ):
             sleep(1)

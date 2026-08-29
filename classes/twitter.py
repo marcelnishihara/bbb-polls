@@ -1,4 +1,4 @@
-"""Module for the Class Twitter
+"""Módulo de integração com a API do X para publicação de tweets.
 """
 
 import os
@@ -6,25 +6,49 @@ import tweepy
 
 
 class Twitter:
-    '''Class Twitter
-    '''
+    """Gerencia autenticação e publicação na API do X (Twitter).
+    """
 
     def __init__(self, data: dict) -> None:
+        """Inicializa o cliente do X com credenciais de ambiente.
+
+        Args:
+            data (dict): Dados estruturados da enquete do Splash/UOL.
+        """
         self.msg = ''
         self.data = data
         self.__client = tweepy.Client(
-            consumer_key=os.environ['TWITTER_CONSUMER_KEY'],
-            consumer_secret=os.environ['TWITTER_CONSUMER_SECRET'],
-            access_token=os.environ['TWITTER_ACCESS_TOKEN'],
-            access_token_secret=os.environ['TWITTER_ACCESS_TOKEN_SECRET'])
+            consumer_key=os.environ[
+                'TWITTER_CONSUMER_KEY'
+            ],
+            consumer_secret=os.environ[
+                'TWITTER_CONSUMER_SECRET'
+            ],
+            access_token=os.environ[
+                'TWITTER_ACCESS_TOKEN'
+            ],
+            access_token_secret=os.environ[
+                'TWITTER_ACCESS_TOKEN_SECRET'
+            ]
+        )
 
 
     def compose_msg(
             self,
             today_is: dict,
             counter_limit: int = 3) -> None:
-        '''Method __compose_msg
-        '''
+        """Formata o texto da enquete para publicação no X (Twitter).
+
+        Monta a mensagem com o título da enquete, o ranking dos
+        participantes até o limite, porcentagem dos demais, total
+        de votos e timestamp. O resultado fica em `self.msg`.
+
+        Args:
+            today_is (dict): Dicionário com a data/hora atual e
+                formatos.
+            counter_limit (int, optional): Limite de participantes no
+                ranking exibido. Padrão é 3.
+        """
         self.msg = (
             f'Parcial da enquete @Splash_UOL #BBB26: '
             f'"{self.data["title"]}" #RedeBBB\n\n')
@@ -77,8 +101,13 @@ class Twitter:
 
 
     def post(self) -> dict:
-        '''Method post
-        '''
+        """Publica a mensagem gerada no X através da biblioteca Tweepy.
+
+        Returns:
+            dict: Dicionário contendo o status ('success'), tamanho
+                ('tweet_length'), dados ('response_data') ou erro
+                ('error').
+        """
         if not self.msg:
             return {
                 'success': False, 
