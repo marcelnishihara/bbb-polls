@@ -30,7 +30,7 @@
 >
 > Este repositório encontra-se inativo e não recebe novas atualizações ou correções. O projeto foi descontinuado após o encerramento da temporada do Big Brother Brasil e as mudanças no modelo de precificação da API do X (Twitter). O código é mantido publicamente apenas para fins de documentação, consulta e histórico técnico.
 
-## Visao Geral
+## Visão Geral
 
 O **BBB Polls** é uma solução serverless projetada para operar como uma **Google Cloud Function**. O projeto monitora as votações populares do Big Brother Brasil disponibilizadas pelo portal [Splash (UOL)](https://www.uol.com.br/splash/), realizando a coleta periódica de percentuais, totalização de votos e estruturação dos dados para acompanhamento histórico e publicação de parciais.
 
@@ -46,53 +46,53 @@ O **BBB Polls** é uma solução serverless projetada para operar como uma **Goo
 
 ```mermaid
 flowchart TD
-    A[Cliente / Scheduler] -->|Requisicao HTTP + Headers| B[main.py: Cloud Function]
-    B --> C{RequestAnalysis: Autenticacao}
-    C -->|Invalido| D[log_bad_request_*.json / HTTP 400]
-    C -->|Valido| E[SplashUOL: Requisicao e Parsing]
-    E --> F[Persistencia: log_poll_*.json]
+    A[Cliente / Scheduler] -->|Requisição HTTP + Headers| B[main.py: Cloud Function]
+    B --> C{RequestAnalysis: Autenticação}
+    C -->|Inválido| D[log_bad_request_*.json / HTTP 400]
+    C -->|Válido| E[SplashUOL: Requisição e Parsing]
+    E --> F[Persistência: log_poll_*.json]
     F --> G{Tweet == True?}
-    G -->|Sim| H[Twitter: Formatacao e Tweepy Client]
-    H --> I[Persistencia: log_tweet_msg_*.txt]
-    G -->|Nao| J[HTTP 200: Poll Data Logged]
+    G -->|Sim| H[Twitter: Formatação e Tweepy Client]
+    H --> I[Persistência: log_tweet_msg_*.txt]
+    G -->|Não| J[HTTP 200: Poll Data Logged]
 ```
 
-### Estrutura de Diretorios
+### Estrutura de Diretórios
 
 ```
 bbb-polls/
 ├── classes/
-│   ├── helpers.py            # Utilitarios de data/hora e escrita de logs
-│   ├── request_analysis.py   # Validacao de seguranca e analise de headers
-│   ├── splash_uol.py         # Extracao e parsing HTML das enquetes
-│   └── twitter.py            # Formatacao e publicacao na API do X
+│   ├── helpers.py            # Utilitários de data/hora e escrita de logs
+│   ├── request_analysis.py   # Validação de segurança e análise de headers
+│   ├── splash_uol.py         # Extração e parsing HTML das enquetes
+│   └── twitter.py            # Formatação e publicação na API do X
 ├── database/
 │   └── polls.json            # Mapeamento de endpoints por temporada
-├── log/                      # Diretorio de logs brutos em formato JSON
+├── log/                      # Diretório de logs brutos em formato JSON
 ├── tests/
-│   ├── create_logs_database.py # Consolidacao de arquivos em base JSON unica
-│   ├── log_join.py           # Agregacao cronologica e exportacao CSV
-│   └── tests.py              # Simulacao periodica de requisicoes HTTP
+│   ├── create_logs_database.py # Consolidação de arquivos em base JSON única
+│   ├── log_join.py           # Agregação cronológica e exportação CSV
+│   └── tests.py              # Simulação periódica de requisições HTTP
 ├── main.py                   # Ponto de entrada da Cloud Function
-├── README.md                 # Documentacao principal
-└── requirements.txt          # Dependencias do projeto
+├── README.md                 # Documentação principal
+└── requirements.txt          # Dependências do projeto
 ```
 
-## Variaveis de Ambiente
+## Variáveis de Ambiente
 
-Para a execucao completa das funcionalidades de autenticacao e publicacao, as seguintes variaveis de ambiente devem ser configuradas:
+Para a execução completa das funcionalidades de autenticação e publicação, as seguintes variáveis de ambiente devem ser configuradas:
 
-| Variavel | Descricao |
+| Variável | Descrição |
 | :--- | :--- |
-| `UUID` | Namespace hexadecimal base para geracao deterministica do UUID v5. |
-| `TWITTER_CONSUMER_KEY` | Consumer Key da aplicacao no Developer Portal do X. |
-| `TWITTER_CONSUMER_SECRET` | Consumer Secret da aplicacao no Developer Portal do X. |
-| `TWITTER_ACCESS_TOKEN` | Access Token da conta de publicacao no X. |
-| `TWITTER_ACCESS_TOKEN_SECRET` | Access Token Secret da conta de publicacao no X. |
+| `UUID` | Namespace hexadecimal base para geração determinística do UUID v5. |
+| `TWITTER_CONSUMER_KEY` | Consumer Key da aplicação no Developer Portal do X. |
+| `TWITTER_CONSUMER_SECRET` | Consumer Secret da aplicação no Developer Portal do X. |
+| `TWITTER_ACCESS_TOKEN` | Access Token da conta de publicação no X. |
+| `TWITTER_ACCESS_TOKEN_SECRET` | Access Token Secret da conta de publicação no X. |
 
-## Protocolo de Requisicao (Headers HTTP)
+## Protocolo de Requisição (Headers HTTP)
 
-Toda chamada direcionada ao *entry point* da Cloud Function deve fornecer os seguintes cabecalhos HTTP:
+Toda chamada direcionada ao *entry point* da Cloud Function deve fornecer os seguintes cabeçalhos HTTP:
 
 ```http
 GET / HTTP/1.1
@@ -106,15 +106,15 @@ Season: 2026
 
 ### Detalhamento dos Campos
 
-- **`Uuid`** *(string, obrigatorio)*: Identificador unico gerado via `uuid.uuid5(UUID, YYYY_MM_DD_HH_MM)`.
-- **`Endpoint`** *(string, obrigatorio)*: Rota relativa da pagina da enquete no portal Splash/UOL.
-- **`Tweet`** *(string, obrigatorio)*: Booleano em formato string (`true` ou `false`).
-- **`Limit`** *(string, opcional)*: Quantidade de participantes exibidos no ranking nominal (entre `1` e `4`; padrao: `3`).
-- **`Season`** *(string, opcional)*: Ano da edicao correspondente.
+- **`Uuid`** *(string, obrigatório)*: Identificador único gerado via `uuid.uuid5(UUID, YYYY_MM_DD_HH_MM)`.
+- **`Endpoint`** *(string, obrigatório)*: Rota relativa da página da enquete no portal Splash/UOL.
+- **`Tweet`** *(string, obrigatório)*: Booleano em formato string (`true` ou `false`).
+- **`Limit`** *(string, opcional)*: Quantidade de participantes exibidos no ranking nominal (entre `1` e `4`; padrão: `3`).
+- **`Season`** *(string, opcional)*: Ano da edição correspondente.
 
-## Execucao e Testes
+## Execução e Testes
 
-### Instalacao de Dependencias
+### Instalação de Dependências
 
 ```bash
 python3 -m venv venv
@@ -122,17 +122,17 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Execucao de Testes Locais
+### Execução de Testes Locais
 
-Para simular o disparo de requisicoes periodicas contra o ambiente local:
+Para simular o disparo de requisições periódicas contra o ambiente local:
 
 ```bash
 python3 tests/tests.py
 ```
 
-### Consolidacao de Dados e Exportacao
+### Consolidação de Dados e Exportação
 
-- Para unificar todos os logs brutos em uma base JSON unica:
+- Para unificar todos os logs brutos em uma base JSON única:
   ```bash
   python3 tests/create_logs_database.py
   ```
@@ -141,13 +141,13 @@ python3 tests/tests.py
   python3 tests/log_join.py
   ```
 
-## Padroes de Codigo e Engenharia
+## Padrões de Código e Engenharia
 
-- **Estilo de Codigo:** Aderencia estrita as recomendacoes da [PEP 8](https://peps.python.org/pep-0008/) com limite de 79 caracteres por linha de codigo e 72 caracteres para docstrings e comentarios.
-- **Documentacao Interna:** Todas as funcoes, classes e metodos utilizam docstrings no formato [Google Style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) (PEP 257).
+- **Estilo de Código:** Aderência estrita às recomendações da [PEP 8](https://peps.python.org/pep-0008/) com limite de 79 caracteres por linha de código e 72 caracteres para docstrings e comentários.
+- **Documentação Interna:** Todas as funções, classes e métodos utilizam docstrings no formato [Google Style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) (PEP 257).
 
-## Status e Observacoes da API do X
+## Status e Observações da API do X
 
-- Conforme documentado na [_Issue_ #22](https://github.com/marcelnishihara/bbb-polls/issues/22), as tentativas de publicacao via API passaram a retornar status code `503` (*Service Unavailable*) a partir de marco de 2026.
-- A alteracao decorre da descontinuacao do plano gratuito da API do X em favor do modelo *Pay-Per-Use*.
-- Em virtude dessa mudanca de precificacao da plataforma terceira, as postagens automaticas foram pausadas, mantendo a Cloud Function ativa exclusivamente para coleta, parsing e telemetria de dados.
+- Conforme documentado na [_Issue_ #22](https://github.com/marcelnishihara/bbb-polls/issues/22), as tentativas de publicação via API passaram a retornar status code `503` (*Service Unavailable*) a partir de março de 2026.
+- A alteração decorre da descontinuação do plano gratuito da API do X em favor do modelo *Pay-Per-Use*.
+- Em virtude dessa mudança de precificação da plataforma terceira, as postagens automáticas foram pausadas, mantendo a Cloud Function ativa exclusivamente para coleta, parsing e telemetria de dados.
